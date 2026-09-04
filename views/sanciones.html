@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sanciones</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">B</div><span class="brand-name">booleanware</span></div>
+      <nav>
+        <a class="nav-item" href="/"><i class="ti ti-shield-search"></i>Veredictos</a>
+        <a class="nav-item active" href="/sanciones.html"><i class="ti ti-gavel"></i>Sanciones</a>
+        <a class="nav-item" href="/apelaciones.html"><i class="ti ti-message-report"></i>Apelaciones</a>
+        <a class="nav-item" href="/reportes.html"><i class="ti ti-chart-bar"></i>Reportes</a>
+        <a class="nav-item" href="/auditoria.html"><i class="ti ti-history"></i>Auditoría</a>
+        <a class="nav-item" href="/integracion-api.html"><i class="ti ti-plug"></i>Integración API</a>
+        <a class="nav-item" href="/configuracion.html"><i class="ti ti-settings"></i>Configuración</a>
+      </nav>
+    </aside>
+    <main class="content-page">
+    <div class="main-header"><div><h1>Sanciones</h1><p class="subtitle">Medidas activas registradas en la base de datos</p></div></div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Tipo</th><th>Estado</th><th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    </main>
+  </div>
+  <script>
+    fetch('/api/sanctions')
+      .then(r=>r.json())
+      .then(rows=>{
+        const tbody=document.getElementById('rows');
+        rows.forEach(r=>{
+          const tr=document.createElement('tr');
+          tr.innerHTML=`<td class="mono">${r.player}</td><td>${r.type}</td><td class="status ${r.status}">${r.status}</td><td class="cell-secondary mono">${r.created_at}</td>`;
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
+</body>
+</html>
